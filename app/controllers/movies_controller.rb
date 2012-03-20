@@ -7,11 +7,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-    sortby = params[:sortby] # retrieve movie ID from URI route
-    if sortby=="sort_by_title"
-       @movies = Movie.sort(title)
-    elsif sortby=="sort_by_date"
-       @movies = Movie.sort(release_date)
+    @sortby = params[:sortby] # retrieve movie ID from URI route
+    if !@sortby.nil?
+       @movies = Movie.order("#{@sortby} ASC")
     else
        @movies = Movie.all
     end
